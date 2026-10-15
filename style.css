@@ -16,6 +16,7 @@
 
 html {
     scroll-behavior: smooth;
+    scroll-padding-top: 90px;
 }
 
 body {
@@ -30,41 +31,59 @@ a {
     text-decoration: none;
 }
 
+a:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 4px;
+}
+
+.container {
+    width: min(100% - 48px, 1200px);
+    margin-inline: auto;
+}
+
 .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: rgba(11, 17, 32, 0.96);
+    border-bottom: 1px solid var(--border);
+    backdrop-filter: blur(12px);
+}
+
+.nav-container {
+    min-height: 76px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 24px 8%;
-    border-bottom: 1px solid var(--border);
+    gap: 24px;
 }
 
 .logo {
-    font-size: 1.6rem;
+    flex-shrink: 0;
+    font-size: 1.65rem;
     font-weight: 800;
     color: var(--accent);
+    letter-spacing: -1px;
 }
 
-nav {
+.nav-links {
     display: flex;
-    gap: 20px;
-    flex-wrap: wrap;
+    align-items: center;
+    gap: 28px;
 }
 
-nav a,
-.text-link {
+.nav-links a {
     color: var(--muted);
+    font-size: 0.95rem;
     transition: color 0.2s ease;
 }
 
-nav a:hover,
-.text-link:hover {
+.nav-links a:hover {
     color: var(--accent);
 }
 
 .hero {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 110px 8%;
+    padding-block: 115px 120px;
 }
 
 .eyebrow,
@@ -73,79 +92,107 @@ nav a:hover,
     font-size: 0.8rem;
     font-weight: 700;
     letter-spacing: 2px;
+    text-transform: uppercase;
 }
 
 h1 {
-    margin: 22px 0;
-    font-size: clamp(2.5rem, 7vw, 4.8rem);
-    line-height: 1.12;
-    letter-spacing: -2px;
+    max-width: 900px;
+    margin: 24px 0;
+    font-size: clamp(2.7rem, 6.5vw, 5rem);
+    line-height: 1.1;
+    letter-spacing: -2.5px;
 }
 
 .intro {
-    max-width: 650px;
+    max-width: 680px;
     margin-bottom: 30px;
     color: var(--muted);
     font-size: 1.1rem;
 }
 
 .primary-button {
-    display: inline-block;
-    padding: 12px 20px;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 13px 21px;
     background: var(--accent);
     color: var(--background);
+    border: 1px solid var(--accent);
     border-radius: 6px;
     font-weight: 700;
+    transition: transform 0.2s ease, background 0.2s ease;
 }
 
 .primary-button:hover {
-    opacity: 0.85;
+    transform: translateY(-2px);
+    background: #8cf0c7;
 }
 
 .content-section {
-    padding: 75px 8%;
+    padding-block: 76px 84px;
     border-top: 1px solid var(--border);
 }
 
 h2 {
-    margin: 12px 0 20px;
-    font-size: clamp(1.8rem, 4vw, 2.7rem);
+    margin: 12px 0 24px;
+    font-size: clamp(2rem, 4vw, 2.8rem);
+    line-height: 1.2;
+    letter-spacing: -1px;
 }
 
-.content-section > p:not(.eyebrow) {
+.about-content {
     max-width: 850px;
+}
+
+.about-content p,
+.contact-description {
     margin-bottom: 16px;
     color: var(--muted);
+    font-size: 1.03rem;
 }
 
 .project-grid {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
+    align-items: stretch;
     gap: 20px;
-    margin-top: 32px;
+    margin-top: 34px;
 }
 
 .project-card {
-    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    min-width: 0;
+    padding: 26px;
     background: var(--surface);
     border: 1px solid var(--border);
     border-radius: 12px;
-    transition: transform 0.2s ease,
-                border-color 0.2s ease;
+    transition: transform 0.2s ease, border-color 0.2s ease;
 }
 
 .project-card:hover {
-    transform: translateY(-4px);
+    transform: translateY(-3px);
     border-color: var(--accent);
 }
 
 .project-card h3 {
     margin: 18px 0 10px;
+    font-size: 1.15rem;
+    line-height: 1.4;
 }
 
-.project-card p:not(.project-number) {
+.project-card > p:not(.project-number) {
     color: var(--muted);
     font-size: 0.95rem;
+}
+
+.project-card .project-technologies {
+    margin-top: 12px;
+}
+
+.project-technologies strong {
+    color: var(--text);
 }
 
 .status {
@@ -153,44 +200,118 @@ h2 {
     margin-top: 20px;
     color: var(--accent);
     font-size: 0.85rem;
+    font-weight: 600;
 }
 
-.text-link {
+.project-card .text-link {
     display: inline-block;
-    margin-top: 18px;
+    margin-top: 20px;
     color: var(--accent);
+    font-weight: 600;
 }
 
-footer {
-    padding: 28px 8%;
+.project-card .text-link:hover,
+.contact-links a:hover,
+.contact-email a:hover {
+    color: #a7f3d0;
+}
+
+.contact-section {
+    padding-block: 80px 90px;
+}
+
+.contact-description {
+    max-width: 700px;
+    margin-bottom: 28px;
+}
+
+.contact-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.contact-links a {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 16px;
+    color: var(--accent);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.contact-links a:hover {
+    border-color: var(--accent);
+    background: var(--surface);
+}
+
+.contact-email {
+    margin-top: 22px;
+    color: var(--muted);
+    font-size: 0.95rem;
+}
+
+.site-footer {
+    padding-block: 26px;
     border-top: 1px solid var(--border);
     color: var(--muted);
     font-size: 0.85rem;
 }
 
-@media (max-width: 760px) {
-    .site-header {
-        align-items: flex-start;
-        gap: 16px;
-        padding: 20px 6%;
-    }
-
-    nav {
-        justify-content: flex-end;
-        gap: 10px 14px;
-        font-size: 0.85rem;
+@media (max-width: 850px) {
+    .project-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
     .hero {
-        padding: 80px 6%;
+        padding-block: 90px 100px;
+    }
+}
+
+@media (max-width: 600px) {
+    .container {
+        width: min(100% - 36px, 1200px);
+    }
+
+    .nav-container {
+        align-items: flex-start;
+        padding-block: 18px;
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .nav-links {
+        width: 100%;
+        flex-wrap: wrap;
+        gap: 10px 20px;
+    }
+
+    .hero {
+        padding-block: 76px 84px;
+    }
+
+    h1 {
+        font-size: clamp(2.5rem, 11vw, 3.7rem);
+        letter-spacing: -1.5px;
     }
 
     .content-section {
-        padding: 55px 6%;
+        padding-block: 58px 64px;
     }
 
     .project-grid {
         grid-template-columns: 1fr;
+    }
+
+    .project-card {
+        padding: 23px;
+    }
+
+    .contact-links {
+        align-items: flex-start;
+        flex-direction: column;
     }
 }
 
@@ -203,5 +324,6 @@ footer {
     *::before,
     *::after {
         transition: none !important;
+        animation: none !important;
     }
 }
